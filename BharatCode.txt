@@ -1,0 +1,31 @@
+Turant (तुरंत): a first-response kit for people in India who have just lost money to a scam.
+BharatCode Build League 2026, Round 1. Direction: Everyday assistance.
+
+What it does
+  Call 1930 first; then Turant reads the person's story and screenshots (UPI receipts, bank SMS,
+  chats), checks every UTR, UPI ID, IFSC and phone number, and writes a 1930 call sheet, a
+  cybercrime.gov.in complaint draft and a bank letter. Fixed rules decide the plan and RBI
+  liability note; numbers the AI can't back up are replaced with [check].
+
+How BharatCode is used
+  Model:     qwen-3.8-27b (configurable via BHARATCODE_MODEL)
+  Endpoint:  POST https://bharatcode.ai/api/model/v1/responses, store:false, stream:true
+  Features:  image input (screenshots), app-side function tools (check_identifier, inspect_link,
+             parse_datetime, lookup_scam_pattern), strict structured output via text.format,
+             queue-keepalive handling, 503 retry with backoff, incomplete-response handling.
+  Code:      src/lib/bharatcode/ (client, tool loop, structured output)
+             src/lib/pipeline/   (analysis and message-check pipelines)
+
+Run it
+  npm install
+  cp .env.example .env.local   # add BHARATCODE_API_KEY from https://bharatcode.ai/account
+  npm run dev                  # http://localhost:3000
+  Without a key: sample cases, manual entry and rule-based checks still work.
+
+Verify
+  npm test            unit, integration and API tests
+  npm run test:e2e    Playwright, desktop + mobile, with accessibility checks
+  npm run verify:live live checks against BharatCode (needs a key)
+
+Repository: https://github.com/Sahvendra7/BharatCode
+License: MIT

@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+
+# builds
+.next/
+.next-e2e/
+out/
+build/
+*.tsbuildinfo
+next-env.d.ts
+
+# tests
+test-results/
+playwright-report/
+coverage/
+eval/results/*.json
+
+# env (never commit real keys)
+.env
+.env.*
+!.env.example
+
+# misc
+.DS_Store
+*.log
+.vercel
